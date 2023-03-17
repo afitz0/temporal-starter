@@ -7,10 +7,14 @@ import (
 	"go.temporal.io/sdk/client"
 
 	"starter"
+	"starter/zapadapter"
 )
 
 func main() {
-	c, err := client.NewLazyClient(client.Options{})
+	c, err := client.NewLazyClient(client.Options{
+		Logger: zapadapter.NewZapAdapter(
+			zapadapter.NewZapLogger()),
+	})
 	if err != nil {
 		log.Fatalln("Unable to create client", err)
 	}
