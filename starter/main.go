@@ -6,14 +6,16 @@ import (
 
 	"go.temporal.io/sdk/client"
 
+	"go.uber.org/zap/zapcore"
+
 	"starter"
 	"starter/zapadapter"
 )
 
 func main() {
+	logger := zapadapter.NewZapAdapter(zapadapter.NewZapLogger(zapcore.DebugLevel))
 	c, err := client.Dial(client.Options{
-		Logger: zapadapter.NewZapAdapter(
-			zapadapter.NewZapLogger()),
+		Logger: logger,
 	})
 	if err != nil {
 		log.Fatalln("Unable to create client", err)
